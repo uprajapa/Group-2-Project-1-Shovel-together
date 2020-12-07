@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Login Page</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="css/font-awesome.min.css">
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+        <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+        <link rel="stylesheet" href="css/style.css">
+    </head>
+    <body>
+        <div class="modal-dialog text-center">
+            <div class="col-sm-10 main-section">
+                <div class="modal-content">
+                    <div class="col-12 user-img">
+                        <img src="assets\images\user.png" alt="User Image">
+                    </div>
+                    <div style="display:block;">
+                        <form class="col-12" id="loginForm">
+                            <div class="form-group">
+                                <input id="loginEmail" type="email" class="form-control" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input id="loginPass" type="password" class="form-control" placeholder="Password" required>
+                            </div>
+                            <button id="login" class="btn btn-success"><i class="fas fa-sign-in-alt"></i>Login</button>                    
+                        </form>
+                        <div class="col-12 forgot">
+                            <a style="color: white;" onclick="window.open('index.html', '_self')">Go to registration</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+
+            const loginForm = document.getElementById('loginForm');
+            
+            loginForm.addEventListener('submit', function(e){
+                e.preventDefault();
+
+                var email = document.getElementById("loginEmail").value;
+                var password = document.getElementById("loginPass").value;
+
+                var loginData = {
+                    "email": email,
+                    "password": password
+                }
+
+                axios.post('http://localhost:5000/login', loginData)
+                    .then(result => {
+                        window.alert('login successfully..!!!');
+                    }).catch(err => {
+                        window.alert(err.error);
+                    });
+            })
+        </script>
+    </body>
+</html>

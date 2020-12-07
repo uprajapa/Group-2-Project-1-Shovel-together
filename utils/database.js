@@ -6,7 +6,7 @@ db516 = new Promise(function(resolve, reject){
     connection516 = mysql516.createConnection({
         host     : 'localhost',
         user     : 'root',
-        password : 'Krutin@47',
+        password : 'Danny@47',
         port     : '3306',
         database : 'mydb'
     });
