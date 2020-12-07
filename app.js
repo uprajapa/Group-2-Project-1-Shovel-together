@@ -1,8 +1,3 @@
-/**
- * @file Main server file for the Application.
- * @author Krutin Trivedi, Banner No: B00843515 <krutin@dal.ca>
- */
-
 const express = require('express');
 var cors = require('cors')
 
