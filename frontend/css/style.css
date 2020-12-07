@@ -1,8 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 
 body{
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
     font-family: 'Roboto', sans-serif;
-    background: url(../image/tbay.jpg) no-repeat center center fixed;
+    background: url('../assets/images/tbay.jpg') no-repeat center center fixed;
     background-size: cover;
 }
 .main-section{
