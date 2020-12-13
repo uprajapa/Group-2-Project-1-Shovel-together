@@ -12,6 +12,18 @@
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+            <a href="index.html" class="navbar-brand">Thunder Bay</a>
+            <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarMenu">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a href="signUp.html" class="nav-link">Sign Up</a></li>
+                    <li class="nav-item"><a href="login.html" class="nav-link">Log In</a></li>
+                </ul>
+            </div>
+        </nav>
         <div class="modal-dialog text-center">
             <div class="col-sm-10 main-section">
                 <div class="modal-content">
@@ -29,7 +41,7 @@
                             <button id="login" class="btn btn-success"><i class="fas fa-sign-in-alt"></i>Login</button>                    
                         </form>
                         <div class="col-12 forgot">
-                            <a style="color: white;" onclick="window.open('index.html', '_self')">Go to registration</a>
+                            <a style="color: white;" href="signUp.html">Don't have an account? Register yourself!</a>
                         </div>
                     </div>
                 </div>
