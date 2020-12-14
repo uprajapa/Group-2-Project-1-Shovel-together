@@ -9,26 +9,26 @@ router.route('/login').post((req, res) => {
 	
     if (!req.body.email.trim()) return res.send(JSON.stringify({"status": 400, "error": 'Email-ID input is wrong..!'}));
     if (!req.body.password.trim()) return res.send(JSON.stringify({"status": 400, "error": 'Password input is wrong..!'}));
-
+    console.log(req.body.email);
     const email = req.body.email;
 	const password = req.body.password;
 
     //checking if any User post exists in the database 
-    const checkingSQL = 'SELECT * from user WHERE email="' + email + '";';
+    const checkingEmail = 'SELECT email from user WHERE email="' + email + '";';
+    const checkingPass = 'SELECT password from user WHERE password="' + password + '";';
     
     database.then((connection) => {
-        connection.query( checkingSQL, (error, results, fields) => {
-            
+        connection.query( checkingEmail, (error, results, fields) => {
+            console.log(results);
             //if there is any error performing the query it will be thrown and will be out of this call.
             if (error) return res.send(JSON.stringify({"status": 400, "error": error}));
-    
             // if there is no result then we don't have the record with EmailID and password
             if (results < 1) return res.send(JSON.stringify({"status": 404, "error": "NO User with same EmailID and Password exists..!!"}));
-            
-            console.log("Am i here??");
+            console.log("Am i here??");            
 
+            console.log("Im here")
 			const fetchedUser = results[0];
-			
+			console.log(fetchedUser.password);
 			// Check password
 			bcrypt.compare(password, fetchedUser.password).then(isMatch => {
 				if (isMatch) {
@@ -84,9 +84,10 @@ router.route('/add').post((req, res, next) => {
     const password = req.body.password;
     const address = req.body.address;
     const contact = req.body.contact;
+    const shovel = req.body.shovel;
     
     //checking if any User post exists in the database 
-    const checkingSQL = 'SELECT * from user WHERE email="' + email + '";';
+    const checkingSQL = 'SELECT email, name from user WHERE email="' + email + '";';
 
     console.log("was here..")
     
@@ -95,31 +96,35 @@ router.route('/add').post((req, res, next) => {
             
             //if there is any error performing the query it will be thrown and will be out of this call.
             if (error) return res.send(JSON.stringify({"status": 400, "error": error}));
+            else{
+            console.log(results)               
             
-            console.log("I was unable to reach here prevously to reach");
-            
-            //if there is a result then we have the record with same EmailID
-            if (results > 0) return res.send(JSON.stringify({"status": 404, "error": "User with same EmailID and Name already exists..!!"}));
-
-            // Hash password before saving in database
-            bcrypt.genSalt(10, (err, salt) => {
-                if (err) throw err;
-                bcrypt.hash(password, salt, (error_, hash) => {
-                    if (error_) return res.send(JSON.stringify({"status": 400, "error": errors_}));
-					
-					const sql = 'INSERT INTO user ' +
-                                'VALUES ("' + email + '", "' + name + '", "' + hash + '", "' + address + '", "' + contact + '");';
+            const sql = 'INSERT INTO user ' +
+                                'VALUES ("1","' + email + '", "' + name + '", "' + password + '", "' + address + '", "' + contact + '","'+ shovel +'");';
                     
 					// Adding A User to user table
 					connection.query( sql, (errors, resultset, fields) => {
                         //if there is any error performing the query it will be thrown and will be out of this call.
-                        if (errors) return res.send(JSON.stringify({"status": 400, "error": errors}));
-                        
+                        if (errors){ return res.send(JSON.stringify({"status": 400, "error": errors}));}
+                        else{
+                            console.log("query updated!");
+                            location.replace('shovel.html');
+                              
                         console.log("query successful");
-
+                        console.log(resultset);
+                        }
                         //if there is no error than we will get the response with success status.
-                        return res.send(JSON.stringify({"status": 200, "error": null, "message":"Added new User record in the database", "response": resultset}));                    
+                        if(resultset) {
+                            return res.send(JSON.stringify({"status": 200, "error": null, "message":"Added new User record in the database", "response": resultset}));                    
+                        } 
                     });
+            }
+            // Hash password before saving in database
+            bcrypt.genSalt(10, (err, salt) => {
+                if (err) throw err;
+                bcrypt.hash(password, salt, (error_, hash) => {
+                    if (error_) return res.send(JSON.stringify({"status": 400, "error": errors_}));					
+					
                 });
             });
         });
