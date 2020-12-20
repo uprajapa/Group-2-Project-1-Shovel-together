@@ -12,7 +12,11 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+        <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
         <link rel="stylesheet" href="css/style.css">
+        <script src="../reactApp/main.js" type="text/babel"></script>
     </head>
     <body>
         <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
@@ -22,31 +26,39 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarMenu">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a href="index.html" class="nav-link">Log Out</a></li>
+                    <li id="logout" class="nav-item"><a href="index.html" class="nav-link">Log Out</a></li>
                 </ul>
             </div>
         </nav>
         <div class="description">
-            <div class="table1">
-                <h4>List of who can shovel for you!</h4>                
-                <table>
-                    <thead>
-                        <td>Email</td>
-                        <td>Name</td>
-                        <td>Contact Number</td>
-                    </thead>                    
-                </table>
-            </div> 
-            <div class="table2">
-                <h4>List of people who want someone to shovel!</h4>                
-                <table>
-                    <thead>
-                        <td>Email</td>
-                        <td>Name</td>  
-                        <td>Contact Number</td>
-                    </thead>                    
-                </table>
-            </div>            
+            <div id="root">
+
+            </div>
         </div>
+
+        <script>
+            const logoutButton = document.getElementById('logout');
+
+            const token = localStorage.getItem('session');
+            if (!token) {
+                location.replace('index.html');
+            }
+            logoutButton.addEventListener('click', function(e){
+                e.preventDefault();
+
+                if(token){
+                    axios.get('http://localhost:5000/logout/' + token)
+                        .then(result => {
+                            console.log(result)
+                            localStorage.removeItem('session');
+                            localStorage.removeItem('email');
+                            location.replace('index.html');
+                        }).catch(err => {
+                            console.log(err);
+                        });
+                }
+
+            })
+        </script>
     </body>
 </html>
