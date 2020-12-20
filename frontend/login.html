@@ -66,8 +66,11 @@
                 axios.post('http://localhost:5000/login', loginData)
                     .then(result => {
                         window.alert('login successfully..!!!');
+                        localStorage.setItem('session', result.data.token);
+                        localStorage.setItem('email', result.data.email);
+                        location.replace('shovel.html');
                     }).catch(err => {
-                        window.alert(err.error);
+                        window.alert('Password Incorrect..!!!');
                     });
             })
         </script>
