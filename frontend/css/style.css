@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 @media (min-width: 600px){
-    body{   
+    body{
         font-family: 'Roboto', sans-serif;
         background: url('../assets/images/tbay.jpg') no-repeat fixed;
         background-size: cover;
@@ -63,10 +63,10 @@
         color: #c2fbfe
     }
     .description{
-        
+
         display: flex;
         position: relative;
-        
+
         justify-content: center;
     }
     .innerText{
@@ -77,33 +77,10 @@
         background: rgba(255,255,255,.2);
         box-shadow: 0 5px 15px rgba(0,0,0,.5);
     }
-    .table1{
-        position: relative;
-        padding: 10px;
-        margin: 15%;
-        text-align: center;
-        background: rgba(255,255,255,.2);
-        box-shadow: 0 5px 15px rgba(0,0,0,.5);
-    }
-    .table2{
-        display: none;
-        position: relative;
-        padding: 10px;
-        margin: 15%;
-        text-align: center;
-        background: rgba(255,255,255,.2);
-        box-shadow: 0 5px 15px rgba(0,0,0,.5);
-    }
-    table{
-        align-content: center;
-    }
-    thead, td{
-        border: 1px solid black;
-        border-radius: 5px;
-    }
+
 }
 @media (max-width: 600px){
-    body{   
+    body{
         font-family: 'Roboto', sans-serif;
         background: url('../assets/images/tbay.jpg') no-repeat fixed;
         background-size: cover;
@@ -166,10 +143,10 @@
         color: #c2fbfe
     }
     .description{
-        
+
         display: flex;
         position: relative;
-        
+
         justify-content: center;
     }
     .innerText{
@@ -180,28 +157,4 @@
         background: rgba(255,255,255,.2);
         box-shadow: 0 5px 15px rgba(0,0,0,.5);
     }
-    .table1{
-        position: relative;
-        padding: 10px;
-        margin: 15%;
-        text-align: center;
-        background: rgba(255,255,255,.2);
-        box-shadow: 0 5px 15px rgba(0,0,0,.5);
-    }
-    .table2{
-        display: none;
-        position: relative;
-        padding: 10px;
-        margin: 15%;
-        text-align: center;
-        background: rgba(255,255,255,.2);
-        box-shadow: 0 5px 15px rgba(0,0,0,.5);
-    }
-    table{
-        align-content: center;
-    }
-    thead, td{
-        border: 1px solid black;
-        border-radius: 5px;
-    }
-}
+ }

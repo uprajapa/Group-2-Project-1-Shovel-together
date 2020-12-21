@@ -93,6 +93,7 @@
                             localStorage.setItem('session', result.data.token);
                             localStorage.setItem('email', result.data.email);
                             localStorage.setItem('name', result.data.name);
+                            localStorage.setItem('message', result.data.message);
                             location.replace('shovel.html');
                         }).catch(err => {
                             console.log(err);

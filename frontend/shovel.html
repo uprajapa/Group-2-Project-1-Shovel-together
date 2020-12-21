@@ -19,7 +19,7 @@
         <script src="../reactApp/main.js" type="text/babel"></script>
     </head>
     <body>
-        <nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-dark">
             <a href="index.html" class="navbar-brand">Thunder Bay</a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
                 <span class="navbar-toggler-icon"></span>
@@ -30,17 +30,22 @@
                 </ul>
             </div>
         </nav>
-        <div id="greeting">
-
-        </div>
-        <div class="description">
-            <div id="root">
-
+        <div class="container">
+            <div class="card my-3">
+                <div class="card-body">
+                    <div id="greeting" class="text-center"></div>
+                    <div id="heading" class="text-center my-2"></div>
+                    <div id="root"></div>
+                </div>
             </div>
+
         </div>
 
         <script>
             const logoutButton = document.getElementById('logout');
+
+            $("#greeting").html("<h2>Welcome, "+ localStorage.getItem("name") +"</h2>");
+            $("#heading").html("<h4>"+ localStorage.getItem("message") +"</h4>");
 
             const token = localStorage.getItem('session');
             if (!token) {
@@ -52,9 +57,10 @@
                 if(token){
                     axios.get('http://localhost:5000/logout/' + token)
                         .then(result => {
-                            console.log(result)
                             localStorage.removeItem('session');
                             localStorage.removeItem('email');
+                            localStorage.removeItem('name');
+                            localStorage.removeItem('message');
                             location.replace('index.html');
                         }).catch(err => {
                             console.log(err);
