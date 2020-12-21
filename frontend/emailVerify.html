@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Account Recovery</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.7/js/all.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark fixed-top">
+    <a href="index.html" class="navbar-brand">Thunder Bay</a>
+    <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarMenu">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarMenu">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item"><a href="signUp.html" class="nav-link">Sign Up</a></li>
+            <li class="nav-item"><a href="login.html" class="nav-link">Log In</a></li>
+        </ul>
+    </div>
+</nav>
+<div class="modal-dialog text-center">
+    <div class="col-sm-10 main-section">
+        <div class="modal-content">
+            <div class="col-12 user-img">
+                <img src="assets\images\user.png" alt="User Image">
+            </div>
+            <div style="display:block;">
+                <form class="col-12" id="verifyEmailForm">
+                    <div class="form-group">
+                        <input id="resetEmail" type="email" class="form-control" placeholder="Email" required>
+                    </div>
+                    <button id="verify" class="btn btn-success"><i class="fas fa-sign-in-alt"></i>Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+            const verifyEmailForm = document.getElementById('verifyEmailForm');
+
+            verify.addEventListener('click', function(e){
+                e.preventDefault();
+
+                var email = document.getElementById("resetEmail").value;
+                localStorage.setItem('email', email);
+
+                axios.get('http://localhost:5000/verify/' + email)
+                    .then(result => {
+                        if(result.data == localStorage.getItem('email')) {
+                            window.alert('Email verified..!!!');
+                            location.replace('resetPassword.html');
+                        } else {
+                            window.alert('This email is not registered..!!!');
+                            location.replace('emailVerify.html');
+                        }
+                    }).catch(err => {
+                        window.alert('This email isaaa not registered..!!!');
+                        location.replace('emailVerify.html');
+                    });
+            })
+        </script>
+</body>
+</html>

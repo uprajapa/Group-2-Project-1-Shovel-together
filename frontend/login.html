@@ -43,6 +43,9 @@
                         <div class="col-12 forgot">
                             <a style="color: white;" href="signUp.html">Don't have an account? Register yourself!</a>
                         </div>
+                        <div class="col-12 forgot">
+                            <a style="color: white;" href="emailVerify.html">Forgot Password? Click here</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -51,7 +54,7 @@
         <script>
 
             const loginForm = document.getElementById('loginForm');
-            
+
             loginForm.addEventListener('submit', function(e){
                 e.preventDefault();
 
@@ -68,6 +71,7 @@
                         window.alert('login successfully..!!!');
                         localStorage.setItem('session', result.data.token);
                         localStorage.setItem('email', result.data.email);
+                        localStorage.setItem('name', result.data.name);
                         location.replace('shovel.html');
                     }).catch(err => {
                         window.alert('Password Incorrect..!!!');
