@@ -79,7 +79,8 @@ app.post('/add', (req, res) => {
                                                 error: null,
                                                 success: true,
                                                 token: token,
-                                                email: email
+                                                email: email,
+                                                name: name
                                             });
                                         }
                                     );
@@ -104,7 +105,7 @@ app.post('/login', (req, res) => {
 	const password = req.body.password;
 
     //checking if any User post exists in the database
-    const checkingEmail = 'SELECT email, password from user WHERE email="' + email + '";';
+    const checkingEmail = 'SELECT email, password, name from user WHERE email="' + email + '";';
 
     database.then((connection) => {
         connection.query( checkingEmail, (error, results, fields) => {
@@ -142,7 +143,8 @@ app.post('/login', (req, res) => {
                             error: null,
                             success: true,
                             token: token,
-                            email: email
+                            email: email,
+                            name: name
                         });
                     }
                 );
@@ -211,6 +213,38 @@ app.get('/user/:email', (req, res) => {
 
 	});
 
+// verify email
+app.get('/verify/:email', (req, res) => {
+
+        const sql = 'SELECT email from user WHERE email="' + req.params.email + '";';
+        database.then((connection) => {
+            connection.query( sql, (error, results, fields) => {
+                if (results.length > 0) return res.json(results[0].email);
+
+                return res.send(JSON.stringify({"status": 400, "error": error}));
+            });
+        });
+
+	});
+
+// reset password
+app.post('/reset/:email', (req, res) => {
+
+    if (!req.body.password.trim()) return res.send(JSON.stringify({"status": 400, "error": 'Email-ID input is wrong..!'}));
+
+        const sql = 'UPDATE user SET password="'+ req.body.password +'" WHERE email="' + req.params.email + '";';
+        console.log(sql);
+        database.then((connection) => {
+            connection.query( sql, (error, results, fields) => {
+
+                //if there is any error performing the query it will be thrown and will be out of this call.
+                if (error) return res.send(JSON.stringify({"status": 400, "error": error}));
+
+                return res.json(results);
+            });
+        });
+
+	});
 
 app.listen(port, () => {
   console.log(`Server is running on port: ${port}`);
