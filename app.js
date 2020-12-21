@@ -60,7 +60,12 @@ app.post('/add', (req, res) => {
                                     const payload = {
                                         email: resultset.email
                                     };
-
+                                    let message = ""
+                                    if (shovel == 0){
+                                        message = "List of People who can help"
+                                    } else if (shovel == 1) {
+                                        message = "List of People who need help"
+                                    }
                                     // Sign token
                                     jwt.sign(
                                         payload,
@@ -80,7 +85,8 @@ app.post('/add', (req, res) => {
                                                 success: true,
                                                 token: token,
                                                 email: email,
-                                                name: name
+                                                name: name,
+                                                message: message
                                             });
                                         }
                                     );
@@ -100,27 +106,35 @@ app.post('/login', (req, res) => {
 
     if (!req.body.email.trim()) return res.send(JSON.stringify({"status": 400, "error": 'Email-ID input is wrong..!'}));
     if (!req.body.password.trim()) return res.send(JSON.stringify({"status": 400, "error": 'Password input is wrong..!'}));
-    console.log(req.body.email);
+
     const email = req.body.email;
 	const password = req.body.password;
 
     //checking if any User post exists in the database
-    const checkingEmail = 'SELECT email, password, name from user WHERE email="' + email + '";';
+    const checkingEmail = 'SELECT email, password, name, shovel from user WHERE email="' + email + '";';
 
     database.then((connection) => {
         connection.query( checkingEmail, (error, results, fields) => {
-            console.log(results);
+//            console.log(results);
             //if there is any error performing the query it will be thrown and will be out of this call.
             if (error) return res.send(JSON.stringify({"status": 400, "error": error}));
             // if there is no result then we don't have the record with EmailID and password
             if (results < 1) return res.send(JSON.stringify({"status": 404, "error": "No User with same EmailID and Password exists..!!"}));
 
 			const fetchedUser = results[0];
-			console.log(fetchedUser.password);
 			// Check password
+			var message = ""
+			if (fetchedUser.shovel == 0){
+                message = "List of People who can help"
+            } else if (fetchedUser.shovel == 1) {
+                message = "List of People who need help"
+            }
+            console.log(fetchedUser.shovel)
             if (password == fetchedUser.password) {
                 // User matched
                 // Create JWT Payload
+
+
                 const payload = {
                     email: fetchedUser.email
                 };
@@ -136,16 +150,19 @@ app.post('/login', (req, res) => {
 
                         //if there is any error performing the query it will be thrown and will be out of this call.
                         if (err) return res.send(JSON.stringify({"status": 400, "error": err}));
-
+                           console.log(fetchedUser.name)
                         //if there is no error than we will get the response with success status.
-                        return res.json({
-                            status: 200,
-                            error: null,
-                            success: true,
-                            token: token,
-                            email: email,
-                            name: name
-                        });
+                        const response = {
+                             status: 200,
+                             error: null,
+                             success: true,
+                             token: token,
+                             email: email,
+                             name: fetchedUser.name,
+                             message: message
+                        }
+                        console.log(response)
+                        return res.json(response);
                     }
                 );
             } else {
