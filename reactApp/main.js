@@ -3,8 +3,8 @@ function NumberList({numbers}) {
   const listItems = numbers.map((number, index) => {
     console.log(number);
     return (
-    <tr key={index}>
-          <th scope="row">{index}</th>
+    <tr key={index+1}>
+          <th scope="row">{index +1}</th>
           <td>{number.name}</td>
           <td>{number.email}</td>
           <td>{number.contact}</td>
